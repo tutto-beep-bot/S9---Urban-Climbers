@@ -1,0 +1,21 @@
+<div style="max-width:480px;margin:24px auto;padding:16px;border:1px solid #eee;border-radius:12px;">
+  <h2>Login / Register</h2>
+
+  @if (userEmail) {
+    <p>Signed in as <strong>{{ userEmail }}</strong></p>
+    <button (click)="logout()" [disabled]="loading">Log out</button>
+  } @else {
+    <label>Email<br><input [(ngModel)]="email" type="email" autocomplete="email" /></label><br><br>
+    <label>Password<br><input [(ngModel)]="password" type="password" autocomplete="current-password" /></label><br><br>
+
+    <div style="display:flex; gap:8px;">
+      <button (click)="login()" [disabled]="loading">Login</button>
+      <button (click)="register()" [disabled]="loading">Register</button>
+    </div>
+  }
+
+  @if (msg) { <p style="color:green; margin-top:12px;">{{ msg }}</p> }
+  @if (err) { <p style="color:crimson; margin-top:12px;">{{ err }}</p> }
+</div>
+
+
