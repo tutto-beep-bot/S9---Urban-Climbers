@@ -1,1 +1,54 @@
-<p>register works!</p>
+<div class="register-container">
+  <h2 class="register-title">Create account</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email"
+             [class.invalid]="email?.invalid && email?.touched" />
+      @if (email?.touched && email?.invalid) {
+        <div class="error-message">
+          @if (email?.errors?.['required']) { Email is required. }
+          @else if (email?.errors?.['email']) { Invalid email format. }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password"
+             [class.invalid]="password?.invalid && password?.touched" />
+      @if (password?.touched && password?.invalid) {
+        <div class="error-message">
+          @if (password?.errors?.['required']) { Password is required. }
+          @else if (password?.errors?.['minlength']) { Password must be at least 6 characters. }
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="confirm">Confirm password</label>
+      <input id="confirm" type="password" formControlName="confirm"
+             [class.invalid]="(confirm?.touched && confirm?.invalid) || (confirm?.touched && registerForm.errors?.['passwordsMismatch'])" />
+      @if (confirm?.touched && (confirm?.invalid || registerForm.errors?.['passwordsMismatch'])) {
+        <div class="error-message">
+          @if (confirm?.errors?.['required']) { Confirmation is required. }
+          @else { Passwords do not match. }
+        </div>
+      }
+    </div>
+
+    @if (errorMessage) { <div class="error-message">{{ errorMessage }}</div> }
+    @if (successMessage) { <div class="success-message">{{ successMessage }}</div> }
+
+    <button type="submit" [disabled]="isLoading || registerForm.invalid" class="btn btn-success">
+      @if (isLoading) { <span>Creating...</span> } @else { <span>Register</span> }
+    </button>
+
+    <div class="login-link">
+      Already have an account?
+      <a [routerLink]="['/login']">Login here</a>
+    </div>
+  </form>
+</div>

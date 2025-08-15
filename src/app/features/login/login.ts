@@ -11,10 +11,10 @@ import { Auth } from '../../core/auth/auth';
 })
 export class Login {
   loginForm: FormGroup;
-  errorMessage = '';
-  isLoading = false;
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
-  constructor(private AuthService: Auth, private router: Router, private fb: FormBuilder) {
+  constructor(private authService: Auth, private router: Router, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -22,7 +22,7 @@ export class Login {
   }
 
   async ngOnInit() {
-    if (await this.AuthService.isAuthenticated()) {
+    if (await this.authService.isAuthenticated()) {
       this.router.navigate(['/']);
     }
   }
@@ -35,7 +35,7 @@ export class Login {
     const { email, password } = this.loginForm.value;
 
     try {
-      await this.AuthService.signIn(email, password);
+      await this.authService.signIn(email, password);
       this.router.navigate(['/']);
     } catch (error: any) {
       this.errorMessage = this.getErrorMessage(error);
