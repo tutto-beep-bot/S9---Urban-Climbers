@@ -19,6 +19,8 @@ export class AddEditPost implements OnInit {
   isLoading = false;
   errorMessage = '';
   successMessage = '';
+  selectedFile: File | null = null;
+  imagePreview: string | null = null;
   
   constructor(
     private fb: FormBuilder,
@@ -62,6 +64,20 @@ export class AddEditPost implements OnInit {
     }
   }
   
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      
+      // Create a preview of the selected image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+  
   async onSubmit() {
     if (this.postForm.invalid) return;
     
@@ -70,13 +86,17 @@ export class AddEditPost implements OnInit {
     this.successMessage = '';
     
     try {
+      const formValues = this.postForm.value;
+      
       if (this.isEditing && this.postId) {
-        await this.supabaseService.updatePost(this.postId, this.postForm.value);
+        await this.supabaseService.updatePost(this.postId, formValues, this.selectedFile || undefined);
         this.successMessage = 'Post updated successfully!';
       } else {
-        await this.supabaseService.createPost(this.postForm.value);
+        await this.supabaseService.createPost(formValues, this.selectedFile || undefined);
         this.successMessage = 'Post created successfully!';
         this.postForm.reset();
+        this.selectedFile = null;
+        this.imagePreview = null;
       }
       
       setTimeout(() => {

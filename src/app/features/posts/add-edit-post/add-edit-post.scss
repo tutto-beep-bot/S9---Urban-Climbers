@@ -34,3 +34,12 @@
     box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
   }
 }
+
+.img-preview {
+  max-height: 200px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
