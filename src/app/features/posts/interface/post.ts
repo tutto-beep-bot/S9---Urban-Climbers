@@ -4,6 +4,7 @@ export interface Post {
     description: string;
     funrating: number;
     image_url: string;
+    maps_url: string;
     created_by: string;
     created_at: string;
 
