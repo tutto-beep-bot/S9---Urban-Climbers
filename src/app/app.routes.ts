@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path: 'login', component: Login, canActivate: [guestGuard] }, 
     { path: 'register', component: Register, canActivate: [guestGuard] },
     { path: 'home', component: Home, canActivate: [authGuard] },
-    { path: 'posts/new',component: AddEditPost, canActivate: [authGuard] }, 
+    { path: 'posts/new', component: AddEditPost, canActivate: [authGuard] }, 
     { path: 'posts/:id/edit', component: AddEditPost, canActivate: [authGuard] },   
     { path: '**', redirectTo: 'posts' }
 ];

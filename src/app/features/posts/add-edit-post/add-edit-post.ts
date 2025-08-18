@@ -1,11 +1,98 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { SupabaseService } from '../../../core/supabase_service/supabase';
+import { Post } from '../interface/post';
 
 @Component({
   selector: 'app-add-edit-post',
-  imports: [],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './add-edit-post.html',
   styleUrl: './add-edit-post.scss'
 })
-export class AddEditPost {
-
+export class AddEditPost implements OnInit {
+  postForm: FormGroup;
+  isEditing = false;
+  postId?: number;
+  isLoading = false;
+  errorMessage = '';
+  successMessage = '';
+  
+  constructor(
+    private fb: FormBuilder,
+    private supabaseService: SupabaseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.postForm = this.fb.group({
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      funrating: [1, [Validators.required, Validators.min(1), Validators.max(5)]],
+      image_url: [''],
+      maps_url: ['', [Validators.required]]
+    });
+  }
+  
+  async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditing = true;
+      this.postId = parseInt(id, 10);
+      this.loadPost(this.postId);
+    }
+  }
+  
+  async loadPost(id: number) {
+    try {
+      this.isLoading = true;
+      const post = await this.supabaseService.getPostById(id);
+      this.postForm.patchValue({
+        title: post.title,
+        description: post.description,
+        funrating: post.funrating,
+        image_url: post.image_url,
+        maps_url: post.maps_url
+      });
+    } catch (error: any) {
+      this.errorMessage = `Error loading post: ${error.message}`;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+  
+  async onSubmit() {
+    if (this.postForm.invalid) return;
+    
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+    
+    try {
+      if (this.isEditing && this.postId) {
+        await this.supabaseService.updatePost(this.postId, this.postForm.value);
+        this.successMessage = 'Post updated successfully!';
+      } else {
+        await this.supabaseService.createPost(this.postForm.value);
+        this.successMessage = 'Post created successfully!';
+        this.postForm.reset();
+      }
+      
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 1500);
+      
+    } catch (error: any) {
+      this.errorMessage = `Error: ${error.message}`;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+  
+  get title() { return this.postForm.get('title'); }
+  get description() { return this.postForm.get('description'); }
+  get funrating() { return this.postForm.get('funrating'); }
+  get image_url() { return this.postForm.get('image_url'); }
+  get maps_url() { return this.postForm.get('maps_url'); }
 }
