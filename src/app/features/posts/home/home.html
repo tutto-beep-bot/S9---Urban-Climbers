@@ -1,9 +1,92 @@
-<div class="user-routes-container">
-    <h4>My routes</h4>
-</div>
-<div class="addButton">
-    <button [routerLink]="['/posts/new']" type="button" class="btn btn-success">Add Route</button>
-</div>
-<div class="liked-routes-container">
-    <h4>Liked routes</h4>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Climbing Routes</h2>
+    <button [routerLink]="['/posts/new']" type="button" class="btn btn-success">
+      <i class="fas fa-plus"></i> Add New Route
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading your routes...</p>
+    </div>
+  } @else if (errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+      <button class="btn btn-outline-danger btn-sm ms-2" (click)="loadUserPosts()">
+        Try Again
+      </button>
+    </div>
+  } @else if (userPosts.length === 0) {
+    <div class="text-center py-5">
+      <div class="empty-state">
+        <i class="fas fa-mountain fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">No routes yet</h4>
+        <p class="text-muted">Start sharing your climbing adventures!</p>
+        <button [routerLink]="['/posts/new']" type="button" class="btn btn-info">
+          Create Your First Route
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="row">
+      @for (post of userPosts; track post.id) {
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 post-card">
+
+            <div class="card-img-container">
+              @if (post.image_url) {
+                <img 
+                  [src]="post.image_url" 
+                  [alt]="post.title"
+                  class="card-img-top"
+                  loading="lazy"
+                >
+              } @else {
+                <div class="card-img-placeholder">
+                  <i class="fas fa-image fa-2x text-muted"></i>
+                  <p class="text-muted mb-0">No image</p>
+                </div>
+              }
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text flex-grow-1">{{ post.description }}</p>
+
+              <div class="post-details mb-3">
+                <span class="badge bg-info me-2">
+                  <i class="fas fa-star"></i> {{ post.funrating }}/5
+                </span>
+                <small class="text-muted">
+                  {{ post.created_at | date:'short' }}
+                </small>
+              </div>
+
+              <div class="card-actions">
+                <button 
+                  class="btn btn-outline-info btn-sm me-2" 
+                  (click)="editPost(post.id)"
+                  title="Edit route"
+                >
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button 
+                  class="btn btn-outline-primary btn-sm" 
+                  (click)="deletePost(post.id, post.title)"
+                  title="Delete route"
+                >
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+  }
 </div>

@@ -69,7 +69,6 @@ export class AddEditPost implements OnInit {
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
       
-      // Create a preview of the selected image
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
@@ -101,7 +100,7 @@ export class AddEditPost implements OnInit {
       
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 1500);
+      }, 1000);
       
     } catch (error: any) {
       this.errorMessage = `Error: ${error.message}`;
