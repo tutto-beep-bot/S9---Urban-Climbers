@@ -6,6 +6,7 @@ import { PostFeed } from './features/posts/post-feed/post-feed';
 import { authGuard } from './core/auth/auth-guard'; 
 import { AddEditPost } from './features/posts/add-edit-post/add-edit-post';
 import { guestGuard } from './core/auth/guest-guard';
+import { About } from './shared/ui/about/about';
 
 export const routes: Routes = [
     { path: '', component: PostFeed },
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'register', component: Register, canActivate: [guestGuard] },
     { path: 'home', component: Home, canActivate: [authGuard] },
     { path: 'posts/new', component: AddEditPost, canActivate: [authGuard] }, 
-    { path: 'posts/:id/edit', component: AddEditPost, canActivate: [authGuard] },   
+    { path: 'posts/:id/edit', component: AddEditPost, canActivate: [authGuard] }, 
+    { path: 'about', component: About },  
     { path: '**', redirectTo: 'posts' }
 ];
