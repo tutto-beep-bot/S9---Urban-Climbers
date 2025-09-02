@@ -100,7 +100,7 @@ export class AddEditPost implements OnInit {
       
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 1000);
+      }, 1500);
       
     } catch (error: any) {
       this.errorMessage = `Error: ${error.message}`;

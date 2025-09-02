@@ -26,7 +26,7 @@
         <i class="fas fa-mountain fa-3x text-muted mb-3"></i>
         <h4 class="text-muted">No routes yet</h4>
         <p class="text-muted">Start sharing your climbing adventures!</p>
-        <button [routerLink]="['/posts/new']" type="button" class="btn btn-info">
+        <button [routerLink]="['/posts/new']" type="button" class="btn btn-primary">
           Create Your First Route
         </button>
       </div>
@@ -35,58 +35,59 @@
     <div class="row">
       @for (post of userPosts; track post.id) {
         <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 post-card">
-
-            <div class="card-img-container">
-              @if (post.image_url) {
-                <img 
-                  [src]="post.image_url" 
-                  [alt]="post.title"
-                  class="card-img-top"
-                  loading="lazy"
-                >
-              } @else {
-                <div class="card-img-placeholder">
-                  <i class="fas fa-image fa-2x text-muted"></i>
-                  <p class="text-muted mb-0">No image</p>
-                </div>
-              }
+      <div class="card h-100 post-card">
+     
+        <div class="card-img-container">
+          @if (post.image_url) {
+            <img 
+              [src]="post.image_url" 
+              [alt]="post.title"
+              class="card-img-top"
+              loading="lazy"
+            >
+          } @else {
+            <div class="card-img-placeholder">
+              <i class="fas fa-image fa-2x text-muted"></i>
+              <p class="text-muted mb-0">No image</p>
             </div>
+          }
+        </div>
 
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text flex-grow-1">{{ post.description }}</p>
 
-              <div class="post-details mb-3">
-                <span class="badge bg-info me-2">
-                  <i class="fas fa-star"></i> {{ post.funrating }}/5
-                </span>
-                <small class="text-muted">
-                  {{ post.created_at | date:'short' }}
-                </small>
-              </div>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text flex-grow-1">{{ post.description }}</p>
+          
 
-              <div class="card-actions">
-                <button 
-                  class="btn btn-outline-info btn-sm me-2" 
-                  (click)="editPost(post.id)"
-                  title="Edit route"
-                >
-                  <i class="fas fa-edit"></i> Edit
-                </button>
-                <button 
-                  class="btn btn-outline-primary btn-sm" 
-                  (click)="deletePost(post.id, post.title)"
-                  title="Delete route"
-                >
-                  <i class="fas fa-trash"></i> Delete
-                </button>
-              </div>
-            </div>
+          <div class="post-details mb-3">
+            <span class="badge bg-info me-2">
+              <i class="fas fa-star"></i> {{ post.funrating }}/5
+            </span>
+            <small class="text-muted">
+              {{ post.created_at | date:'short' }}
+            </small>
+          </div>
 
+          <div class="card-actions">
+            <button 
+              class="btn btn-outline-info btn-sm me-2" 
+              (click)="editPost(post.id)"
+              title="Edit route"
+            >
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button 
+              class="btn btn-outline-primary btn-sm" 
+              (click)="deletePost(post.id, post.title)"
+              title="Delete route"
+            >
+              <i class="fas fa-trash"></i> Delete
+            </button>
           </div>
         </div>
-      }
+      </div>
+      </div>
+    }
     </div>
   }
 </div>

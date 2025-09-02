@@ -59,6 +59,7 @@ export class SupabaseService {
     
     let image_url = post.image_url;
     
+    // Upload image if provided
     if (imageFile) {
       image_url = await this.uploadImage(imageFile);
     }
@@ -91,10 +92,11 @@ export class SupabaseService {
   }
   
   async updatePost(id: number, post: Partial<Omit<Post, 'id' | 'created_at' | 'created_by'>>, imageFile?: File): Promise<Post> {
-
+    // Verify user is authenticated
     const { data: userData } = await this.client.auth.getUser();
     if (!userData.user) throw new Error('User not authenticated');
     
+    // First check if the post belongs to the current user
     const { data: existingPost, error: fetchError } = await this.client
       .from('posts')
       .select('*')
@@ -103,13 +105,14 @@ export class SupabaseService {
       
     if (fetchError) throw fetchError;
     
-
+    // Verify ownership - this is important for RLS policies
     if (existingPost.created_by !== userData.user.id) {
       throw new Error('You can only update your own posts');
     }
     
     let updatedPost = { ...post };
     
+    // Upload image if provided
     if (imageFile) {
       const image_url = await this.uploadImage(imageFile);
       updatedPost = { ...updatedPost, image_url };
@@ -119,7 +122,7 @@ export class SupabaseService {
       .from('posts')
       .update(updatedPost)
       .eq('id', id)
-      .eq('created_by', userData.user.id) 
+      .eq('created_by', userData.user.id) // Add this to ensure RLS policy is satisfied
       .select()
       .single();
       
