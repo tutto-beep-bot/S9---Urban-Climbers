@@ -20,7 +20,7 @@ export class Register {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirm: ['', [Validators.required]]
-    }, { validators: this.passwordsMatchValidator });
+    }, { validators: this.passwordsMatchValidator() });
   }
 
   async ngOnInit() {
