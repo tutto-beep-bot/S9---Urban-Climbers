@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   font-family: Garamond, Baskerville, Baskerville Old Face, Hoefler Text, Times New Roman, serif;
 }
 
@@ -19,6 +19,15 @@
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.clickable-card {
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
   }
 }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { SupabaseService } from '../../../core/supabase_service/supabase';
 import { Post } from '../interface/post';
 
@@ -16,7 +16,10 @@ export class PostFeed implements OnInit {
   isLoading = false;
   errorMessage = '';
   
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {}
   
   async ngOnInit() {
     this.loadPosts();
@@ -32,5 +35,9 @@ export class PostFeed implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  viewPost(postId: number) {
+    this.router.navigate(['/posts', postId]);
   }
 }
