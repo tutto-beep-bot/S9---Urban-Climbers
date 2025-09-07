@@ -25,7 +25,7 @@ export class Register {
 
   async ngOnInit() {
     if (await this.auth.isAuthenticated()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     }
   }
 

@@ -9,6 +9,22 @@
     justify-content: center;
 }
 
+@media (max-width: 767.98px) {
+  .about-message {
+    width: 80% !important;
+    max-width: 80% !important;
+    height: auto;
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  .quote-container {
+    width: 80% !important;
+    max-width: 80% !important;
+    height: auto;
+  }
+}
+
 .quote-container {
     text-align: center;
     font-size: 1.2rem;

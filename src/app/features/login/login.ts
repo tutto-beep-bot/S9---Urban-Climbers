@@ -36,7 +36,7 @@ export class Login {
 
     try {
       await this.authService.signIn(email, password);
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     } catch (error: any) {
       this.errorMessage = this.getErrorMessage(error);
     } finally {
