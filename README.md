@@ -1,59 +1,164 @@
-# UrbanClimbers
+# UrbanClimbers 🧗‍♂️
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+A modern web application for urban climbing enthusiasts to discover, share, and manage climbing routes in urban environments. Built with Angular 20 and Supabase for a seamless user experience.
 
-## Development server
+## Description
 
-To start a local development server, run:
+UrbanClimbers is a community-driven platform where climbers can:
+- Discover new urban climbing spots and routes
+- Share their favorite climbing locations with detailed descriptions
+- Rate routes based on fun factor (1-5 stars)
+- Manage their personal collection of routes
+
+## Main Features
+
+### Authentication System
+- **User Registration & Login**: Secure authentication with email validation
+- **Protected Routes**: Access control for authenticated users
+- **Session Management**: Persistent login sessions with automatic logout
+
+### Route Management
+- **Browse All Routes**: Public feed of all climbing routes shared by the community
+- **Personal Dashboard**: Manage your own climbing routes
+- **Add New Routes**: Create detailed route entries with:
+  - Title and description
+  - Fun rating (1-5 stars)
+  - Photo uploads
+- **Edit & Delete**: Full CRUD operations for your routes
+
+### Interactive Features
+- **Route Details**: Comprehensive view of each climbing spot
+- **Maps Integration**: Direct links to Google Maps for navigation
+- **Image Gallery**: Visual representation of climbing spots
+- **Responsive Design**: Optimized for desktop and mobile devices
+
+### User Experience
+- **Modern UI**: Clean, intuitive interface with Bootstrap styling
+- **Real-time Notifications**: Toast notifications for user actions
+- **Loading States**: Smooth loading indicators
+- **Form Validation**: Comprehensive client-side validation
+
+## Technology Stack
+
+- **Frontend**: Angular 20 with TypeScript
+- **Backend**: Supabase (PostgreSQL database + Authentication)
+- **Styling**: Bootstrap 5 + Bootswatch themes
+- **Notifications**: NGX-Toastr
+- **Testing**: Jasmine + Karma
+- **Build Tool**: Angular CLI
+
+## Installation
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- Git
+
+### Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd UrbanClimbers
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   - Create environment files for Supabase configuration
+   - Add your Supabase project URL and API key
+
+4. **Database Setup**
+   - Configure your Supabase project
+   - Set up the posts table with required fields
+   - Configure authentication settings
+
+## Execution
+
+### Development Server
 
 ```bash
+# Start the development server
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The application will be available at `http://localhost:4200/`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Custom Port
 
 ```bash
-ng generate component component-name
+# Run on a specific port
+ng serve --port 4201
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Production Build
 
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# Build for production
+npm run build
+# or
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Testing
 
 ```bash
+# Run unit tests
+npm test
+# or
 ng test
 ```
 
-## Running end-to-end tests
+## Project Structure
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+src/app/
+├── core/                    # Core services and guards
+│   ├── auth/               # Authentication service and guards
+│   └── supabase_service/   # Database service
+├── features/               # Feature modules
+│   ├── login/             # Login component
+│   ├── register/          # Registration component
+│   └── posts/             # Post-related components
+│       ├── home/          # User dashboard
+│       ├── post-feed/     # Public route feed
+│       ├── post-view/     # Route details
+│       └── add-edit-post/ # Route creation/editing
+├── shared/                # Shared components
+│   └── ui/               # UI components (navbar, etc.)
+└── environments/         # Environment configurations
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Available Scripts
 
-## Additional Resources
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run unit tests
+- `npm run watch` - Build in watch mode
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Getting Started
+
+1. **Register an Account**: Create your climber profile
+2. **Explore Routes**: Browse the community feed to discover new spots
+3. **Add Your Routes**: Share your favorite climbing locations
+4. **Rate & Review**: Help others by rating routes you've tried
+5. **Navigate**: Use integrated maps to find your way to new spots
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues and enhancement requests.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+**Happy Climbing!**
