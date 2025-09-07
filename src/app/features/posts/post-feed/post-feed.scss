@@ -1,0 +1,65 @@
+.welcome-message {
+  font-size: 1.2rem;
+  color: #6c6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  font-family: Garamond, Baskerville, Baskerville Old Face, Hoefler Text, Times New Roman, serif;
+}
+
+.welcome-img {
+  max-width: 60%;
+}
+
+
+@media (max-width: 767.98px) {
+  .welcome-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 200px;
+    object-fit: cover;
+    object-position: left center;
+  }
+  
+  .row.row-cols-1.row-cols-md-2.row-cols-lg-3 {
+    .col {
+      max-width: 85%;
+      margin: 0 auto 1rem auto;
+    }
+  }
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.clickable-card {
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.badge {
+  font-size: 0.8rem;
+}
+
+.btn-outline-secondary {
+  &:hover {
+    background-color: #6c757d;
+    color: white;
+  }
+}

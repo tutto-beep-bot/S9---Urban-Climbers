@@ -1,0 +1,13 @@
+img {
+    border-radius: 5px;
+}
+
+.navbar-brand {
+    margin-right: 0.5rem !important;
+    display: flex;
+    align-items: flex-end;
+    
+    img {
+        vertical-align: baseline;
+    }
+}

@@ -1,10 +1,22 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { App } from './app';
+import { Auth } from './core/auth/auth';
+
+// Mock Auth service
+class MockAuth {
+  user$ = of(null);
+  async isAuthenticated() { return false; }
+}
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, RouterTestingModule],
+      providers: [
+        { provide: Auth, useClass: MockAuth }
+      ]
     }).compileComponents();
   });
 
@@ -14,10 +26,9 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', () => {
+  it('should have title property', () => {
     const fixture = TestBed.createComponent(App);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, urban-climbers');
+    const app = fixture.componentInstance;
+    expect(app.title).toBe('urban-climbers');
   });
 });

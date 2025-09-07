@@ -1,0 +1,37 @@
+.post-detail-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.post-image {
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.post-image-placeholder {
+  height: 400px;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.card-text {
+  color: #5a6c7d;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.badge {
+  font-size: 0.9rem;
+}
+
+.btn {
+  border-radius: 6px;
+  margin-right: 0.5rem;
+}
