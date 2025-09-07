@@ -5,14 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { AddEditPost } from './add-edit-post';
 import { SupabaseService } from '../../../core/supabase_service/supabase';
 
-// Mock SupabaseService
 class MockSupabaseService {
   async getPostById(id: number) { return null; }
   async createPost(post: any) { return { id: 1 }; }
   async updatePost(id: number, post: any) { return true; }
 }
 
-// Mock ActivatedRoute
 const mockActivatedRoute = {
   snapshot: {
     paramMap: {
@@ -55,15 +53,12 @@ describe('AddEditPost', () => {
   it('should validate fun rating range (1-5)', () => {
     const funratingControl = component.postForm.get('funrating');
     
-    // Test minimum value
     funratingControl?.setValue(0);
     expect(funratingControl?.hasError('min')).toBeTruthy();
     
-    // Test maximum value
     funratingControl?.setValue(6);
     expect(funratingControl?.hasError('max')).toBeTruthy();
     
-    // Test valid values
     funratingControl?.setValue(3);
     expect(funratingControl?.hasError('min')).toBeFalsy();
     expect(funratingControl?.hasError('max')).toBeFalsy();
@@ -75,10 +70,8 @@ describe('AddEditPost', () => {
   });
 
   it('should validate complete form submission', () => {
-    // Initially form should be invalid
     expect(component.postForm.invalid).toBeTruthy();
     
-    // Fill out required fields
     component.postForm.patchValue({
       title: 'Test Climbing Route',
       description: 'A challenging route with great views',
@@ -86,7 +79,6 @@ describe('AddEditPost', () => {
       maps_url: 'https://maps.google.com/test'
     });
     
-    // Form should now be valid
     expect(component.postForm.valid).toBeTruthy();
   });
 });
