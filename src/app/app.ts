@@ -9,5 +9,5 @@ import { Navbar } from "./shared/ui/navbar/navbar";
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'urban-climbers';
+  title = 'urban-climbers';
 }

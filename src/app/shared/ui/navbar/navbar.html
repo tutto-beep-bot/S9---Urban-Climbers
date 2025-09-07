@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a [routerLink]="['/']" routerLinkActive="active" class="nav-link active" href="#">Explore
+          <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  class="nav-link" href="#">Explore
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
