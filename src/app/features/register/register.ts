@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Auth } from '../../core/auth/auth';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class Register {
   successMessage: string = '';
   isLoading: boolean = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private auth: Auth) {
+  constructor(private router: Router, private fb: FormBuilder, private auth: Auth, private toastr: ToastrService) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -38,17 +39,18 @@ export class Register {
     const { email, password } = this.registerForm.value;
     try {
       const { session } = await this.auth.signUp(email, password);
-
+      this.toastr.success('Registration successful!', 'Welcome');
       if(session) {
         this.successMessage = 'Registration successful!';
         this.registerForm.reset();
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
         return;
       }
       await this.auth.signIn(email, password);
       this.router.navigate(['/']);
     } catch (error: any) {
         this.errorMessage = this.getErrorMessage(error);
+        this.toastr.error(this.getErrorMessage(error), 'Register Failed');
     } finally {
       this.isLoading = false;
     }

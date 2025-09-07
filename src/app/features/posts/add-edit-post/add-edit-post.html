@@ -9,9 +9,9 @@
           @if (errorMessage) {
             <div class="alert alert-danger">{{ errorMessage }}</div>
           }
-          @if (successMessage) {
+          <!-- @if (successMessage) {
             <div class="alert alert-success">{{ successMessage }}</div>
-          }
+          } -->
           
           <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
@@ -106,7 +106,7 @@
               <button type="button" class="btn btn-secondary" routerLink="/home">Cancel</button>
               <button 
                 type="submit" 
-                class="btn btn-primary" 
+                class="btn btn-success" 
                 [disabled]="postForm.invalid || isLoading"
               >
                 @if (isLoading) {

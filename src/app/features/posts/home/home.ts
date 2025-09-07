@@ -3,6 +3,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../../core/supabase_service/supabase';
 import { Post } from '../interface/post';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class Home implements OnInit {
 
   constructor(
     private supabaseService: SupabaseService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -60,6 +62,8 @@ export class Home implements OnInit {
       this.userPosts = this.userPosts.filter(post => post.id !== postId);
       
       console.log(`Post "${postTitle}" deleted successfully`);
+
+      this.toastr.success(`Deleted successfully`, 'Success');
       
     } catch (error) {
       console.error('Error deleting post:', error);

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../../core/supabase_service/supabase';
 import { Post } from '../interface/post';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-edit-post',
@@ -18,7 +19,6 @@ export class AddEditPost implements OnInit {
   postId?: number;
   isLoading = false;
   errorMessage = '';
-  successMessage = '';
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   
@@ -26,7 +26,8 @@ export class AddEditPost implements OnInit {
     private fb: FormBuilder,
     private supabaseService: SupabaseService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -82,25 +83,23 @@ export class AddEditPost implements OnInit {
     
     this.isLoading = true;
     this.errorMessage = '';
-    this.successMessage = '';
     
     try {
       const formValues = this.postForm.value;
       
       if (this.isEditing && this.postId) {
         await this.supabaseService.updatePost(this.postId, formValues, this.selectedFile || undefined);
-        this.successMessage = 'Post updated successfully!';
+        this.toastr.success('Post updated successfully!', 'Success');
       } else {
         await this.supabaseService.createPost(formValues, this.selectedFile || undefined);
-        this.successMessage = 'Post created successfully!';
+        this.toastr.success('Post created successfully!', 'Success');
         this.postForm.reset();
         this.selectedFile = null;
         this.imagePreview = null;
       }
+
+      this.router.navigate(['/home']);
       
-      setTimeout(() => {
-        this.router.navigate(['/home']);
-      }, 1500);
       
     } catch (error: any) {
       this.errorMessage = `Error: ${error.message}`;

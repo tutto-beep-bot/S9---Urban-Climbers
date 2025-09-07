@@ -44,6 +44,11 @@ export class Auth {
   async signUp(email: string, password: string): Promise<{ user: User | null; session: Session | null }> {
     const { data, error } = await this.supabase.auth.signUp({ email, password });
     if (error) throw error;
+    
+    if (data.user) {
+      this.userSubject.next(data.user);
+    }
+    
     return data;
   }
 
