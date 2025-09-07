@@ -21,7 +21,8 @@ export class SupabaseService {
   async getPosts(): Promise<Post[]> {
 		const { data, error } = await this.client
 			.from('posts')
-			.select('*');
+			.select('*')
+      .order('created_at', { ascending: false });
 		console.log('Supabase posts:', data, error);
 		if (error) throw error;
 		return data;
