@@ -14,6 +14,7 @@ export class PostView implements OnInit {
   post: Post | null = null;
   isLoading = false;
   errorMessage = '';
+  returnUrl = '/';
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +23,7 @@ export class PostView implements OnInit {
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     if (id) {
       await this.loadPost(parseInt(id));
     }

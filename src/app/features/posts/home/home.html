@@ -35,7 +35,7 @@
     <div class="row">
       @for (post of userPosts; track post.id) {
         <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card h-100 post-card">
+      <div class="card h-100 clickable-card" (click)="viewPost(post.id)">
      
         <div class="card-img-container">
           @if (post.image_url) {
@@ -60,7 +60,7 @@
           
 
           <div class="post-details mb-3">
-            <span class="badge bg-info me-2">
+            <span class="badge bg-success me-2">
               <i class="fas fa-star"></i> {{ post.funrating }}/5
             </span>
             <small class="text-muted">
@@ -71,14 +71,14 @@
           <div class="card-actions">
             <button 
               class="btn btn-outline-info btn-sm me-2" 
-              (click)="editPost(post.id)"
+              (click)="editPost(post.id); $event.stopPropagation()"
               title="Edit route"
             >
               <i class="fas fa-edit"></i> Edit
             </button>
             <button 
               class="btn btn-outline-primary btn-sm" 
-              (click)="deletePost(post.id, post.title)"
+              (click)="deletePost(post.id, post.title); $event.stopPropagation()"
               title="Delete route"
             >
               <i class="fas fa-trash"></i> Delete

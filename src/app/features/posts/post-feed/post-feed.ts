@@ -38,6 +38,6 @@ export class PostFeed implements OnInit {
   }
 
   viewPost(postId: number) {
-    this.router.navigate(['/posts', postId]);
+    this.router.navigate(['/posts', postId], { queryParams: { returnUrl: '/' } });
   }
 }

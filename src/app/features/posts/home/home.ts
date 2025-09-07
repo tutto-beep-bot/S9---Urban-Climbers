@@ -26,6 +26,10 @@ export class Home implements OnInit {
     this.loadUserPosts();
   }
 
+  viewPost(postId: number) {
+    this.router.navigate(['/posts', postId], { queryParams: { returnUrl: '/home' } });
+  }
+
   async loadUserPosts() {
     this.isLoading = true;
     this.errorMessage = '';
