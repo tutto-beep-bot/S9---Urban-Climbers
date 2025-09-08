@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrService } from 'ngx-toastr';
 import { Register } from './register';
 import { Auth } from '../../core/auth/auth';
 
@@ -16,6 +17,13 @@ class MockRouter {
   navigate(path: any[]) { return Promise.resolve(true); }
 }
 
+class MockToastrService {
+  success(message: string, title?: string) { }
+  error(message: string, title?: string) { }
+  info(message: string, title?: string) { }
+  warning(message: string, title?: string) { }
+}
+
 describe('Register', () => {
   let component: Register;
   let fixture: ComponentFixture<Register>;
@@ -24,7 +32,8 @@ describe('Register', () => {
     await TestBed.configureTestingModule({
       imports: [Register, ReactiveFormsModule, RouterTestingModule],
       providers: [
-        { provide: Auth, useClass: MockAuth }
+        { provide: Auth, useClass: MockAuth },
+        { provide: ToastrService, useClass: MockToastrService }
       ]
     })
     .compileComponents();
