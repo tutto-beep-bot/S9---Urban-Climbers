@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AddEditPost } from './add-edit-post';
 import { SupabaseService } from '../../../core/supabase_service/supabase';
 
@@ -9,6 +10,13 @@ class MockSupabaseService {
   async getPostById(id: number) { return null; }
   async createPost(post: any) { return { id: 1 }; }
   async updatePost(id: number, post: any) { return true; }
+}
+
+class MockToastrService {
+  success(message: string, title?: string) { }
+  error(message: string, title?: string) { }
+  info(message: string, title?: string) { }
+  warning(message: string, title?: string) { }
 }
 
 const mockActivatedRoute = {
@@ -28,7 +36,8 @@ describe('AddEditPost', () => {
       imports: [AddEditPost, RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: SupabaseService, useClass: MockSupabaseService },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: ToastrService, useClass: MockToastrService }
       ]
     })
     .compileComponents();

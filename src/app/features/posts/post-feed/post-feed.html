@@ -6,8 +6,22 @@
   <div class=" d-flex justify-content-center">
     <img class="mb-5 welcome-img" src="IMG_5348.PNG" alt="skyline view of Barcelona">
   </div>
-  
-  <h2 class="mb-5 text-center">Explore Climbing Routes</h2>
+  <div class="title-search-bar">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center mb-4">
+      <h2 class="mb-3 mb-lg-0 text-center text-lg-start">Explore Climbing Routes</h2>
+      <div class="input-group" style="max-width: 350px; width: 100%;">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search routes by location..." 
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange($event)"
+        >
+      </div>
+    </div>
+   </div>
+
   
   @if (isLoading) {
     <div class="d-flex justify-content-center">
@@ -19,13 +33,17 @@
     <div class="alert alert-danger">
       {{ errorMessage }}
     </div>
+  } @else if (filteredPosts.length === 0 && searchTerm) {
+    <div class="alert alert-info text-center">
+      No routes found matching "{{ searchTerm }}". Try a different search term.
+    </div>
   } @else if (posts.length === 0) {
     <div class="alert alert-info text-center">
       No climbing routes found. Be the first to add one!
     </div>
   } @else {
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      @for (post of posts; track post.id) {
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-3 mt-3">
+      @for (post of filteredPosts; track post.id) {
         <div class="col">
           <div class="card h-100 clickable-card" (click)="viewPost(post.id)">
             @if (post.image_url) {
@@ -37,7 +55,7 @@
               </div>
             }
             <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
+              <h5 class="card-title"><strong>{{ post.title }}</strong></h5>
               <p class="card-text">{{ post.description }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div>
